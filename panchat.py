@@ -8,8 +8,8 @@ def getspeechfromfile(thefile)
 import speech_recognition as sr
 import sys
 
-#filename = thefile
-#filename = "whatsthetemperaturerightnowinankenyiowa.wav"
+# filename = thefile
+# filename = "whatsthetemperaturerightnowinankenyiowa.wav"
 filename = "WakingUp_083121.wav"
 outfile = "x.txt"
 sys.stdout = open(outfile, 'w')
@@ -73,13 +73,13 @@ engine.stop()
 #############################################
 def listenonmicrophone():
     # Record from microphone
+    import PyAudio
     import speech_recognition as sr
     audiotext = ''
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source,duration=1.2)
+        r.adjust_for_ambient_noise(source, duration=1.2)
         print('I\'m listening...''')
-        audio = ""
         audio = r.listen(source, timeout=0)
         try:
             audiotext = (r.recognize_google(audio))
@@ -151,8 +151,8 @@ def splitbigaudio():
 #############################################
 def printvoices():
     import pyttsx3
-    #import gtts
-    #import tts-watson_developer_cloud
+    # import gtts
+    # import tts-watson_developer_cloud
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
     #
@@ -206,14 +206,14 @@ def callopenai(you):
         presence_penalty=0.6,
     )
     # content = response.choices[0].text.split('.')
-    content = response.choices[0].text
-    return response.choices[0].text
+    openairesponse = response.choices[0].text
+    return openairesponse
 
 
 #############################################
 def prettyprint(who, openaiwords):
     import textwrap
-    print(":",who,":")
+    print(":", who, ":")
     wrapper = textwrap.TextWrapper(width=40, initial_indent='     ', subsequent_indent='     ')
     word_list = wrapper.wrap(text=openaiwords)
     # Print each line.
@@ -225,8 +225,8 @@ def prettyprint(who, openaiwords):
 AskAgain = True
 while AskAgain:
     humantext = listenonmicrophone()
-    #humantext = 'what is the year, date and temperature in ankeny iowa'
+    # humantext = 'what is the year, date and temperature in ankeny iowa'
     prettyprint("You", humantext)
-    openairesponse  = callopenai(humantext)
+    openairesponse = callopenai(humantext)
     prettyprint("AI", openairesponse)
     say(openairesponse)
