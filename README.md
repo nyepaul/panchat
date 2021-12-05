@@ -1,2 +1,2 @@
 # panchat
-Chat with OpenAI GPT-3 using speaker and microphone
+A fun little chat audio chat interface with OpenAI GPT-3 using speaker and microphone. 
