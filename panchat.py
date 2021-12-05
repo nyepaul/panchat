@@ -246,7 +246,7 @@ def prettyprint(who, openaiwords):
 
 # main() #####################################
 while True:
-    clear
+    clear()
     humantext = listenonmicrophone()
     if humantext:
         prettyprint("You", humantext)
