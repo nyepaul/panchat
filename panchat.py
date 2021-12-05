@@ -75,18 +75,18 @@ def listenonmicrophone():
     # Record from microphone
     import pyaudio
     import speech_recognition as sr
-    audiotext = ''
+    #
     r = sr.Recognizer()
+    #
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source, duration=1.2)
         print('I\'m listening...''')
         audio = r.listen(source, timeout=0)
         try:
             audiotext = (r.recognize_google(audio))
-            # print(audiotext)
         except Exception as e:
-            pass
-            # print("No audio detected :  " + str(e))
+            print("No audio detected :  " + str(e))
+        #
         # with open("recorded.wav", "wb") as f:
         #    f.write(audio.get_wav_data())
     return audiotext
@@ -168,31 +168,32 @@ def printvoices():
 #############################################
 def say(wordsfromopenai):
     import pyttsx3
+    #
     engine = pyttsx3.init()  # object creation
     rate = 150
     volume = 1
-
+    #
     engine.setProperty('rate', rate)  # setting up new voice rate
     engine.setProperty('volume', volume)  # setting up volume level  between 0 and 1
     voices = engine.getProperty('voices')  # getting details of current voice
     engine.setProperty('voice', voices[0].id)  # changing index, changes voices. 1 for female
-
+    #
     engine.say(wordsfromopenai)
-
+    #
     engine.runAndWait()
     engine.stop()
-
+    #
     return
 
 
 #############################################
 def callopenai(you):
-
+    #
     import openai
-
+    #
     openai.organization = "org-PPqiSbbnLLK3rq5xsQvgj0ut"
     openai.api_key = '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'
-
+    #
     # https://beta.openai.com/docs/api-reference/completions/create#completions/create-engine_id
     response = openai.Completion.create(
         engine="davinci-instruct-beta-v3",
@@ -206,26 +207,26 @@ def callopenai(you):
         presence_penalty=0.6,
     )
     # content = response.choices[0].text.split('.')
-    openairesponse = response.choices[0].text
-    return openairesponse
+    return response.choices[0].text
 
 
 #############################################
 def prettyprint(who, openaiwords):
+    #
     import textwrap
+    #
     print(":", who, ":")
     wrapper = textwrap.TextWrapper(width=40, initial_indent='     ', subsequent_indent='     ')
     word_list = wrapper.wrap(text=openaiwords)
     # Print each line.
     for element in word_list:
         print(f'{element}')
+    return
 
 
 # main() #####################################
-AskAgain = True
-while AskAgain:
+while True:
     humantext = listenonmicrophone()
-    # humantext = 'what is the year, date and temperature in ankeny iowa'
     prettyprint("You", humantext)
     openairesponse = callopenai(humantext)
     prettyprint("AI", openairesponse)
