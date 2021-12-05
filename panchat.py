@@ -193,6 +193,7 @@ def callopenai(you):
     #
     openai.organization = "org-PPqiSbbnLLK3rq5xsQvgj0ut"
     openai.api_key = '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'
+    # You'll need your own openai.com API keys.  I rotate mine often.
     #
     # https://beta.openai.com/docs/api-reference/completions/create#completions/create-engine_id
     response = openai.Completion.create(
