@@ -1,0 +1,10 @@
+.env
+.env.backup
+.idea
+idea/
+.audio-chunks
+audio-chunks/
+venv
+venv/
+audio
+audio/

@@ -77,19 +77,21 @@ def listenonmicrophone():
     import speech_recognition as sr
     #
     r = sr.Recognizer()
+    audiotext = ""
     #
-    with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source, duration=1.2)
-        print('I\'m listening...')
-        audio = r.listen(source, timeout=0)
-        try:
-            audiotext = (r.recognize_google(audio))
-        except Exception as e:
-            pass
-        #    print("No audio detected :  " + str(e))
-        #
-        # with open("recorded.wav", "wb") as f:
-        #    f.write(audio.get_wav_data())
+    while not audiotext:
+        with sr.Microphone() as source:
+            r.adjust_for_ambient_noise(source, duration=1.2)
+            print('\t\tI\'m listening...')
+            audio = r.listen(source, timeout=0)
+            try:
+                audiotext = (r.recognize_google(audio))
+            except Exception as e:
+                pass
+            #    print("No audio detected :  " + str(e))
+            #
+            # with open("recorded.wav", "wb") as f:
+            #    f.write(audio.get_wav_data())
     return audiotext
 
 
@@ -191,9 +193,21 @@ def say(wordsfromopenai):
 def callopenai(you):
     #
     import openai
+    import os
     #
-    openai.organization = "org-PPqiSbbnLLK3rq5xsQvgj0ut"
-    openai.api_key = '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'
+    # lets use host environment to manage openai keys.
+    # Set the environment keys here for convenience while testing.  Set them
+    # in the env shell for security
+    #
+    from dotenv import load_dotenv
+    load_dotenv()
+    #
+    # move .env.example to .env to use with dotenv
+    openaikey = os.environ['OPENAPIKEY']
+    openaiorg = os.environ['OPENAPIORG']
+    #
+    openai.api_key = openaikey
+    openai.organization = openaiorg
     # You'll need your own openai.com API keys.  I rotate mine often.
     #
     # https://beta.openai.com/docs/api-reference/completions/create#completions/create-engine_id
