@@ -80,12 +80,13 @@ def listenonmicrophone():
     #
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source, duration=1.2)
-        print('I\'m listening...''')
+        print('I\'m listening...')
         audio = r.listen(source, timeout=0)
         try:
             audiotext = (r.recognize_google(audio))
         except Exception as e:
-            print("No audio detected :  " + str(e))
+            pass
+        #    print("No audio detected :  " + str(e))
         #
         # with open("recorded.wav", "wb") as f:
         #    f.write(audio.get_wav_data())
@@ -226,7 +227,9 @@ def prettyprint(who, openaiwords):
 # main() #####################################
 while True:
     humantext = listenonmicrophone()
-    prettyprint("You", humantext)
-    openairesponse = callopenai(humantext)
-    prettyprint("AI", openairesponse)
-    say(openairesponse)
+    if humantext:
+        prettyprint("You", humantext)
+        openairesponse = callopenai(humantext)
+        prettyprint("AI", openairesponse)
+        say(openairesponse)
+
