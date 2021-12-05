@@ -96,6 +96,12 @@ def listenonmicrophone():
 
 
 #############################################
+def clear():
+    import os
+    clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+
+
+#############################################
 def splitbigaudio():
     import speech_recognition as sr
     import os
@@ -240,6 +246,7 @@ def prettyprint(who, openaiwords):
 
 # main() #####################################
 while True:
+    clear
     humantext = listenonmicrophone()
     if humantext:
         prettyprint("You", humantext)
