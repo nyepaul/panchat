@@ -203,11 +203,9 @@ def callopenai(you):
         # prompt and response token length cannot exceed 2048
         max_tokens=2000,
         top_p=.9,
-        # echo=True,
         frequency_penalty=0,
         presence_penalty=0.6,
     )
-    # content = response.choices[0].text.split('.')
     return response.choices[0].text
 
 
