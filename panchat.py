@@ -73,7 +73,7 @@ engine.stop()
 #############################################
 def listenonmicrophone():
     # Record from microphone
-    import PyAudio
+    import pyaudio
     import speech_recognition as sr
     audiotext = ''
     r = sr.Recognizer()
